@@ -1,0 +1,259 @@
+{
+  "info": {
+    "name": "MS Cursos API",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Colección completa para probar todos los endpoints de MS Cursos API incluyendo GET, POST, PATCH y DELETE",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Cursos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/cursos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Instructor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"María García\",\n  \"bio\": \"Especialista en desarrollo web con 5 años de experiencia\",\n  \"foto_url\": \"https://example.com/maria.jpg\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/instructores",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["instructores"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar Instructor",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bio\": \"Actualización de bio del instructor\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/instructores/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["instructores", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar Instructor",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/instructores/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["instructores", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Curso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slug\": \"javascript-avanzado\",\n  \"titulo\": \"JavaScript Avanzado\",\n  \"descripcion\": \"Aprende conceptos avanzados de JS como closures y async/await\",\n  \"nivel\": \"advanced\",\n  \"estado\": \"borrador\",\n  \"duracion_min\": 180,\n  \"instructor_ids\": [1]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/cursos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar Curso",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"JS Avanzado Actualizado\",\n  \"estado\": \"publicado\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/cursos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar Curso",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/cursos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Lección",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Introducción a Closures\",\n  \"orden\": 1,\n  \"contenido_url\": \"https://example.com/leccion1\",\n  \"duracion_min\": 30\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/cursos/1/lecciones",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1", "lecciones"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar Lección",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Introducción a Closures Actualizada\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8010/cursos/1/lecciones/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1", "lecciones", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar Lección",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/cursos/1/lecciones/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1", "lecciones", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener Lecciones de Curso",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/cursos/1/lecciones",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1", "lecciones"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener Curso",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8010/cursos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8010",
+          "path": ["cursos", "1"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
