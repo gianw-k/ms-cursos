@@ -262,6 +262,32 @@ def get_cursos(
 
     return cursos
 
+
+@app.get("/cursos/count")
+def get_count(
+    estado: Optional[str] = Query(None, description="Filtrar por estado"),
+    nivel: Optional[str] = Query(None, description="Filtrar por nivel"),
+    db: Session = Depends(get_db)
+):
+    """GET /cursos/count - Retorna la cantidad total de cursos (soporta mismos filtros que /cursos)"""
+    query = db.query(Curso)
+    if estado:
+        query = query.filter(Curso.estado == estado)
+    if nivel:
+        query = query.filter(Curso.nivel == nivel)
+    cantidad = query.count()
+    return {"count": cantidad}
+
+
+@app.get("/cursos/{curso_id}/count")
+def get_count_lecciones(curso_id: int, db: Session = Depends(get_db)):
+    """GET /cursos/{curso_id}/count - Retorna la cantidad de lecciones de un curso"""
+    curso = db.query(Curso).filter(Curso.id == curso_id).first()
+    if not curso:
+        raise HTTPException(status_code=404, detail="Curso no encontrado")
+    cantidad = db.query(Leccion).filter(Leccion.curso_id == curso_id).count()
+    return {"course_id": curso_id, "count": cantidad}
+
 @app.delete("/instructores/{instructor_id}", status_code=204)
 def delete_instructor(instructor_id: int, db: Session = Depends(get_db)):
     """DELETE /instructores/{instructor_id} - Eliminar un instructor"""
