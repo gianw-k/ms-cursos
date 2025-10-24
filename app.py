@@ -197,6 +197,31 @@ def create_curso(curso: CreateCurso, db: Session = Depends(get_db)):
     db.refresh(db_curso)
     return db_curso
 
+@app.get("/cursos/count")
+def get_count(
+    estado: Optional[str] = Query(None, description="Filtrar por estado"),
+    nivel: Optional[str] = Query(None, description="Filtrar por nivel"),
+    db: Session = Depends(get_db)
+):
+    """GET /cursos/count - Retorna la cantidad total de cursos (soporta mismos filtros que /cursos)"""
+    query = db.query(Curso)
+    if estado:
+        query = query.filter(Curso.estado == estado)
+    if nivel:
+        query = query.filter(Curso.nivel == nivel)
+    cantidad = query.count()
+    return {"count": cantidad}
+
+
+@app.get("/cursos/{curso_id}/count")
+def get_count_lecciones(curso_id: int, db: Session = Depends(get_db)):
+    """GET /cursos/{curso_id}/count - Retorna la cantidad de lecciones de un curso"""
+    curso = db.query(Curso).filter(Curso.id == curso_id).first()
+    if not curso:
+        raise HTTPException(status_code=404, detail="Curso no encontrado")
+    cantidad = db.query(Leccion).filter(Leccion.curso_id == curso_id).count()
+    return {"course_id": curso_id, "count": cantidad}
+
 @app.post("/cursos/{curso_id}/lecciones", response_model=LeccionResponse)
 def create_leccion(curso_id: int, leccion: CreateLeccion, db: Session = Depends(get_db)):
     """POST /cursos/{curso_id}/lecciones - Crear una nueva lección para un curso"""
@@ -261,32 +286,6 @@ def get_cursos(
         db.refresh(curso)
 
     return cursos
-
-
-@app.get("/cursos/count")
-def get_count(
-    estado: Optional[str] = Query(None, description="Filtrar por estado"),
-    nivel: Optional[str] = Query(None, description="Filtrar por nivel"),
-    db: Session = Depends(get_db)
-):
-    """GET /cursos/count - Retorna la cantidad total de cursos (soporta mismos filtros que /cursos)"""
-    query = db.query(Curso)
-    if estado:
-        query = query.filter(Curso.estado == estado)
-    if nivel:
-        query = query.filter(Curso.nivel == nivel)
-    cantidad = query.count()
-    return {"count": cantidad}
-
-
-@app.get("/cursos/{curso_id}/count")
-def get_count_lecciones(curso_id: int, db: Session = Depends(get_db)):
-    """GET /cursos/{curso_id}/count - Retorna la cantidad de lecciones de un curso"""
-    curso = db.query(Curso).filter(Curso.id == curso_id).first()
-    if not curso:
-        raise HTTPException(status_code=404, detail="Curso no encontrado")
-    cantidad = db.query(Leccion).filter(Leccion.curso_id == curso_id).count()
-    return {"course_id": curso_id, "count": cantidad}
 
 @app.delete("/instructores/{instructor_id}", status_code=204)
 def delete_instructor(instructor_id: int, db: Session = Depends(get_db)):
